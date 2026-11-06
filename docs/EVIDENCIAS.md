@@ -40,7 +40,7 @@ El mock no transmite dinero; solo simula la respuesta del servicio externo.
 ## E6 · Autorizacion (`can_cancel`)
 | Rol | Propietario | Estado | Antiguedad | Resultado |
 | --- | --- | --- | --- | --- |
-| Admin | No | SHIPPED | cualquiera | Denegado (enviado nunca se cancela) |
+| Admin | Si | SHIPPED | reciente | Denegado (enviado nunca se cancela) |
 | Admin | No | NEW | 48 h | Permitido |
 | Dueno | Si | NEW | 1 h | Permitido |
 | Dueno | Si | NEW | 23 h 59 min | Permitido |
@@ -55,7 +55,7 @@ la venta concurrente del mismo lote (el reporte propone control optimista de con
 
 ## E8 · GitHub Actions
 Sube el proyecto y captura: ejecucion **verde**, luego cambia una asercion a falsa (por ejemplo `assert o.confirm() == 86` en `test_vip_discount`), push y captura **roja**,
-revierte, push y captura **verde**. Pega aqui la URL del repositorio: ______.
+revierte, push y captura **verde**. URL del repositorio: https://github.com/van-gzf/CLN_U5_FarmaExpress (rama main).
 **Que detecto el pipeline:** al romper la aserción, el paso `pytest` fallo y marco la ejecucion en rojo impidiendo dar por buena la version; al revertirla volvio a verde.
 Aclaracion: bloquear el merge requiere configurar branch protection en GitHub; el YAML por si solo no lo activa.
 

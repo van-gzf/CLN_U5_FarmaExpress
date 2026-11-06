@@ -2,8 +2,6 @@
 
 | Iteracion | Objetivo | Prompt / entrada | Respuesta util | Error o supuesto detectado | Decision del equipo |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Generar el proyecto de pruebas del laboratorio y adaptarlo a FarmaExpress | Se compartieron el laboratorio guiado, el proyecto base y los documentos de la Unidad 2 y 3 | Pruebas de dominio, persistencia, mock y 16 casos con matriz CSV | El `ci.yml` original fallaba con `pytest` sin `python -m` (faltaba `pythonpath`); el manual y el codigo usan APIs distintas; el reporte dejaba abiertas S-01 a S-06 | **COMPLETAR POR TI**: que revisaste, que cambiaste |
+| 1 | Generar el proyecto de pruebas del laboratorio y adaptarlo a FarmaExpress | Se compartieron el laboratorio guiado, el proyecto base y los documentos de la Unidad 2 y 3 | Pruebas de dominio, persistencia, mock y 16 casos con matriz CSV | El `ci.yml` original fallaba con `pytest` sin `python -m` (faltaba `pythonpath`); el manual y el codigo usan APIs distintas; el reporte dejaba abiertas S-01 a S-06 | Se reviso todo el codigo generado y se ejecutaron pytest, Ruff y cobertura de forma local (44 passed, 100 %). Se ajusto `pyproject.toml` (`pythonpath` y reglas de Ruff) para que pytest y Ruff funcionaran igual en local y en GitHub Actions, y el pipeline corrio en verde. Las reglas con duda abierta (S-01 a S-06) no se inventaron: se documentaron en `SUPUESTOS_Y_PENDIENTES.md`. |
 
-**Caso sugerido por IA que se corrigio o rechazo (obligatorio):** COMPLETA AQUI con un caso real que tu
-hayas corregido o rechazado y por que. Ejemplo valido de lo que esta documentado: se rechazo escribir
-una prueba para "caduca hoy" porque la regla no esta aprobada (S-01).
+**Caso sugerido por IA que se corrigio o rechazo (obligatorio):** se rechazo escribir una prueba para "caduca hoy" porque la regla no esta aprobada (S-01): el BRD dice "fecha de vencimiento cumplida", que es ambiguo. En su lugar se dejo documentado el supuesto (caducado = fecha anterior a hoy) y solo se probo "caduco ayer" (CP-FX03), para no inventar una regla que el cliente no ha aprobado.
