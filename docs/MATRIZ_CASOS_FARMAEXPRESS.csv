@@ -1,0 +1,17 @@
+﻿ID,Regla,Fuente (U2/U3),Entrada,Resultado esperado,Tipo,Prueba (pytest),Resultado real,Estado
+CP-FX01,RN-02/RN-03 Lote vendible,"US04, US09, CU-01",Lote vigente que caduca manana; descontar 2 de 10 en S1,Existencia queda en 8,Exito,test_cp_fx01_lote_vigente_descuenta_existencia,Coincide con lo esperado,PASSED
+CP-FX02,RN-03 Lote retirado se bloquea,"US08, US09, CU-03",Lote RETIRADO con existencia 10; descontar 1,LoteRetirado; existencia sigue en 10,Error,test_cp_fx02_lote_retirado_bloquea_venta_aunque_tenga_existencia,Coincide con lo esperado,PASSED
+CP-FX03,RN-02 Prohibido vender caducado,"US04, CU-03",Lote que caducó ayer; descontar 1,ProductoCaducado; existencia sigue en 10,Limite,test_cp_fx03_lote_caducado_ayer_bloquea_venta,Coincide con lo esperado,PASSED
+CP-FX04,RN-05 FEFO,"US01, US03, CU-01","Lote A caduca 2027-01-10, lote B 2027-06-10",Se asigna el lote A,Exito,test_cp_fx04_fefo_elige_el_lote_que_caduca_primero,Coincide con lo esperado,PASSED
+CP-FX05,RN-05/RN-04 FEFO sin existencia,"US05, CU-03",Unico lote con existencia 0 en la sucursal,SinExistencia,Error,test_cp_fx05_fefo_sin_lotes_con_existencia_rechaza,Coincide con lo esperado,PASSED
+CP-FX06,RN-05 FEFO por sucursal,"US01, US11",Lote mas proximo solo tiene existencia en otra sucursal,Se asigna el siguiente lote con existencia en la sucursal,Limite,test_cp_fx06_fefo_omite_el_lote_proximo_si_no_tiene_existencia_en_la_sucursal,Coincide con lo esperado,PASSED
+CP-FX07,RN-06 Datos de receta,"US02, CU-02","Producto con receta; cedula, medico y folio completos",Venta COMPLETADA,Exito,test_cp_fx07_venta_con_receta_completa_se_completa,Coincide con lo esperado,PASSED
+CP-FX08,RN-06 Datos de receta,"US02, CU-02",Producto con receta; folio vacio,DatosDeRecetaIncompletos; venta sigue ABIERTA,Error,test_cp_fx08_venta_con_receta_sin_folio_se_rechaza_y_sigue_abierta,Coincide con lo esperado,PASSED
+CP-FX09,RN-06 Datos de receta,"US02, CU-02","Cedula, medico y folio solo con espacios",DatosDeRecetaIncompletos,Limite,test_cp_fx09_datos_de_receta_solo_espacios_se_consideran_vacios,Coincide con lo esperado,PASSED
+CP-FX10,RN-08 Existencia minima,"US12, CU-05","Existencia 10, minima 5",Sin alerta,Exito,test_cp_fx10_existencia_por_encima_del_minimo_no_genera_alerta,Coincide con lo esperado,PASSED
+CP-FX11,RN-08 Existencia minima,"US12, CU-05","Existencia 2, minima 5",Alerta de resurtido para Compras,Error,test_cp_fx11_existencia_por_debajo_del_minimo_genera_alerta,Coincide con lo esperado,PASSED
+CP-FX12,RN-08 Existencia minima,"US12, CU-05","Existencia 5, minima 5 (supuesto S-03)",Sin alerta,Limite,test_cp_fx12_existencia_igual_al_minimo_no_genera_alerta,Coincide con lo esperado,PASSED
+CP-FX13,Persistencia (commit),ADR-02,"Guardar lote con existencias S1=10, S2=4 y confirmar",El lote se lee con ambas existencias,Integracion,test_cp_fx13_commit_persiste_el_lote_con_sus_existencias,Coincide con lo esperado,PASSED
+CP-FX14,Persistencia (rollback),ADR-02,Guardar lote y revertir,El lote no existe,Integracion,test_cp_fx14_rollback_descarta_el_cambio,Coincide con lo esperado,PASSED
+CP-FX15,Mock de eventos tras commit,"ADR-02, CU-04",Retirar lote con fallo al confirmar,No se publica evento; lote sigue VIGENTE,Integracion (mock),test_cp_fx15_evento_no_se_publica_si_el_commit_falla_y_el_lote_no_cambia,Coincide con lo esperado,PASSED
+CP-FX16,Lote inexistente,CU-04,Retirar lote 'X' que no existe,LoteNoEncontrado; no se publica evento,Integracion (mock),test_cp_fx16_retirar_lote_inexistente_falla_sin_publicar_evento,Coincide con lo esperado,PASSED
